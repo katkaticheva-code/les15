@@ -1,0 +1,38 @@
+
+class Preson:
+    def __init__(self,name,age):
+        self.name = name
+        self.__age = age
+    def get_age(self):
+        return self.__age
+    def set_age(self,value):
+        if value<0 or value>120:
+            print('Некоректний вік!')
+        else:
+            self.__age=value
+
+p=Preson("zhangsan",18)
+# p.age=-100
+# print(p.__age)  
+# p.__age=-100
+# print(p._age)
+# p.__age=-100
+# print(p.__age)
+print(p.get_age())
+p.set_age(130)
+print(p.get_age())
+
+p=Preson("zhangsan",18)
+# p.age=-100
+# print(p.__age)  
+# p.__age=-100
+# print(p._age)
+# p.__age=-100
+# print(p.__age)
+print(p.gep_age())
+
+
+
+
+
+

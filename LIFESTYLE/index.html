@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Ресторан Ярослав</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { background: #f2f2f2; color: #1f1f1f; scroll-behavior: smooth; }
+    .container { max-width: 1200px; margin: 0 auto; background: #fff; }
+
+    header { padding: 24px 60px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; }
+    .logo { font-weight: 700; font-size: 22px; color: #ff3b3b; cursor: pointer; }
+    nav a { margin-left: 24px; text-decoration: none; color: #333; font-weight: 500; cursor: pointer; }
+
+    .hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; padding: 60px; background: #eef6fb; }
+    .hero h1 { font-size: 42px; margin-bottom: 16px; }
+    .hero p { margin-bottom: 24px; color: #555; }
+
+    .btn {
+      display: inline-block;
+      background: #ff3b3b;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+    section { scroll-margin-top: 80px; }
+
+    .categories, .promo-grid, .contacts {
+      display: grid;
+      gap: 24px;
+    }
+
+    .categories { padding: 60px; grid-template-columns: repeat(3, 1fr); }
+    .promo { background: #1f4c5c; color: #fff; padding: 60px; }
+    .promo-grid { grid-template-columns: repeat(3, 1fr); }
+    .contacts { grid-template-columns: repeat(4, 1fr); }
+
+    .card, .promo-card, .contact {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .card:hover, .promo-card:hover, .contact:hover { transform: scale(1.03); }
+
+    .card img, .promo-card img { width: 100%; height: 200px; object-fit: cover; }
+    .card h3, .promo-card p { padding: 16px; color: #111; font-weight: 600; }
+
+    .why { padding: 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+    footer { padding: 60px; background: #f7f7f7; text-align: center; }
+
+    @media (max-width: 900px) {
+      .hero, .why { grid-template-columns: 1fr; }
+      .categories, .promo-grid, .contacts { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <div class="logo" onclick="scrollToSection('top')">Yaroslav</div>
+    <nav>
+      <a onclick="scrollToSection('menu')">Меню</a>
+      <a onclick="scrollToSection('promo')">Акції</a>
+      <a onclick="scrollToSection('why')">Про нас</a>
+      <a onclick="scrollToSection('contacts')">Контакти</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <div>
+      <h1>Ресторан вашої мрії поруч</h1>
+      <p>Свіжі страви та швидка доставка</p>
+      <button class="btn" onclick="orderNow()">Замовити зараз</button>
+    </div>
+    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1" style="width:100%;border-radius:16px;">
+  </section>
+
+  <section class="categories" id="menu">
+    <div class="card" onclick="openCategory('Гарячі страви')">
+      <img src="https://images.unsplash.com/photo-1546069901-eacef0df6022">
+      <h3>Гарячі страви</h3>
+    </div>
+    <div class="card" onclick="openCategory('Фірмові сети')">
+      <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836">
+      <h3>Фірмові сети</h3>
+    </div>
+    <div class="card" onclick="openCategory('Салати')">
+      <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe">
+      <h3>Салати</h3>
+    </div>
+  </section>
+
+  <section class="promo" id="promo">
+    <h2>Суперпропозиції</h2>
+    <div class="promo-grid">
+      <div class="promo-card" onclick="addToCart('Обідній сет')"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd"><p>Обідній сет</p></div>
+      <div class="promo-card" onclick="addToCart('Авторські страви')"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b"><p>Авторські страви</p></div>
+      <div class="promo-card" onclick="addToCart('Сніданки')"><img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141"><p>Сніданки</p></div>
+    </div>
+  </section>
+
+  <section class="why" id="why">
+    <div>
+      <h2>Чому саме ми?</h2>
+      <p>Швидко, смачно, якісно.</p>
+    </div>
+    <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9" style="width:100%;border-radius:16px;">
+  </section>
+
+  <footer id="contacts">
+    <h2>Наші контакти</h2>
+    <div class="contacts">
+      <div class="contact" onclick="alert('м. Київ, вул. Хрещатик 1')">📍 Адреса</div>
+      <div class="contact" onclick="alert('+380 99 123 45 67')">📞 Телефон</div>
+      <div class="contact" onclick="alert('info@yaroslav.ua')">✉️ Email</div>
+      <div class="contact" onclick="alert('Пн–Нд: 10:00–22:00')">🕒 Графік</div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function orderNow() {
+    alert('Замовлення прийнято! 🛒');
+  }
+
+  function openCategory(name) {
+    alert('Ви відкрили категорію: ' + name);
+  }
+
+  function addToCart(item) {
+    alert(item + ' додано в кошик ✅');
+  }
+</script>
+
+</body>
+</html>

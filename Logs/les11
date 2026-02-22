@@ -1,0 +1,87 @@
+
+#1
+class Student:
+    def __init__(self, name, age, course):
+        self.name = name
+        self.age = age
+        self.course = course
+
+#2
+
+class Student:
+    def __init__(self, name, age, course):
+        self.name = name
+        self.age = age
+        self.course = course
+
+    def show_info(self):
+        print(f"Студент: {self.name}, Вік: {self.age}, Курс: {self.course}")
+
+
+#3
+
+class Student:
+    def __init__(self, name, age, course):
+        self.name = name
+        self.age = age
+        self.course = course
+
+    def show_info(self):
+        print(f"Студент: {self.name}, Вік: {self.age}, Курс: {self.course}")
+
+    def change_course(self, new_course):
+        self.course = new_course
+
+
+#4
+
+class Task:
+    def __init__(self, title, completed=False):
+        self.title = title
+        self.completed = completed
+
+    def mark_done(self):
+        self.completed = True
+
+
+#5
+
+task1 = Task("Зробити домашку")
+task2 = Task("Прибрати кімнату")
+task3 = Task("Повторити Python")
+
+tasks = [task1, task2, task3]
+
+for task in tasks:
+    status = "✅ Виконано" if task.completed else "❌ Не виконано"
+    print(f"{task.title} — {status}")
+
+
+#6
+
+class Event:
+    def __init__(self, title, date):
+        self.title = title
+        self.date = date
+    def show(self):
+        print(f"Подія: {self.title}, Дата: {self.date}")
+
+
+#7
+
+class Event:
+    def __init__(self, title, date, description=""):
+        self.title = title
+        self.date = date
+        self.description = description
+
+    def show(self):
+        print(f"Подія: {self.title}")
+        print(f"Дата: {self.date}")
+        print(f"Опис: {self.description}")
+
+    def update_description(self, new_description):
+        self.description = new_description 
+
+
+

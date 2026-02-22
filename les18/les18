@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FirstHtml</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <header>
+        <h6>Lorem ipsum dolor sit amet.</h6>
+        <p>Lorem ipsum dolor  <i>Hillel</i> sit amet <b>consectetur</b> adipisicing elit. <strong>afsf</strong> Labore ipsam eligendi necessitatibus numquam quas
+            corporis.</p>
+        <h1>Lorem ipsum dolor sit.</h1>
+    </header>
+    <main>
+        <section>
+            <a href="https://css.in.ua/html/tags">Посилання</a>
+            <a href="https://css.in.ua/html/tags" target="-blank" rel="noopener noreferrer"></a>
+
+        </section>
+    </main>
+    <footer></footer>
+</body>
+</html>

@@ -1,0 +1,125 @@
+# 1️ BankAccount
+class BankAccount:
+    def __init__(self, balance=0):
+        self.__balance = balance
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+
+    @property
+    def balance(self):
+        return self.__balance
+
+
+# 2️ UserProfile (Email)
+class UserProfile:
+    def __init__(self, email):
+        self.email = email
+
+    @property
+    def email(self):
+        return self.__email
+
+    @email.setter
+    def email(self, value):
+        if "@" in value:
+            self.__email = value
+        else:
+            raise ValueError("Неверный формат email")
+
+
+# 3️ Battery
+class Battery:
+    def __init__(self, charge=100):
+        self.__charge = 0
+        self.charge = charge
+
+    @property
+    def charge(self):
+        return self.__charge
+
+    @charge.setter
+    def charge(self, value):
+        if 0 <= value <= 100:
+            self.__charge = value
+
+
+# 4️ Speaker (Volume)
+class Speaker:
+    def __init__(self, volume=5):
+        self.__volume = 0
+        self.volume = volume
+
+    @property
+    def volume(self):
+        return self.__volume
+
+    @volume.setter
+    def volume(self, value):
+        if 0 <= value <= 10:
+            self.__volume = value
+
+
+# 5️ Character (Health)
+class Character:
+    def __init__(self, health=100):
+        self.__health = health
+
+    def damage(self, amount):
+        if amount > 0:
+            self.__health = max(0, self.__health - amount)
+
+    def heal(self, amount):
+        if amount > 0:
+            self.__health += amount
+
+    @property
+    def health(self):
+        return self.__health
+
+
+# 6️ PasswordManager
+class PasswordManager:
+    def __init__(self, password):
+        if len(password) >= 8:
+            self.__password = password
+        else:
+            raise ValueError("Пароль должен быть не менее 8 символов")
+
+    def change_password(self, old, new):
+        if old != self.__password:
+            raise ValueError("Старый пароль неверный")
+        if len(new) < 8:
+            raise ValueError("Новый пароль должен быть не менее 8 символов")
+        self.__password = new
+
+
+
+if __name__ == "__main__":
+    acc = BankAccount(100)
+    acc.deposit(50)
+    acc.withdraw(30)
+    print("Баланс:", acc.balance)
+
+    user = UserProfile("test@mail.com")
+    print("Email:", user.email)
+
+    battery = Battery(80)
+    print("Заряд батареи:", battery.charge)
+
+    speaker = Speaker(7)
+    print("Громкость:", speaker.volume)
+
+    hero = Character()
+    hero.damage(20)
+    hero.heal(10)
+    print("Здоровье персонажа:", hero.health)
+
+    pm = PasswordManager("mypassword")
+    pm.change_password("mypassword", "newsecurepass")
+    print("Пароль успешно изменён")

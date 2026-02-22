@@ -1,0 +1,27 @@
+p {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333333;
+    line-height: 1.5;
+}
+.text {
+    color: blue;
+}
+.text-main {
+    color: red;
+}
+.date{
+    border-radius: 10px;
+    margin: 10px;
+    padding: 0 20px;
+}
+.name{
+    border-radius: 10px;
+    margin: 10px;
+    padding: 0 20px;
+    border: 4px solid black;
+}
+input,button{
+    display: block;
+    
+}

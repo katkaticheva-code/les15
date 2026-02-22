@@ -1,0 +1,107 @@
+import random
+
+# ---------- Створення персонажа ----------
+def create_character():
+    name = input("Введіть ім'я героя: ")
+    return {
+        "name": name,
+        "hp": 100,
+        "attack": 20,
+        "potions": 2
+    }
+
+# ---------- Виведення статусу ----------
+def show_status(player):
+    print("\n📊 Статус героя:")
+    print(f"Ім'я: {player['name']}")
+    print(f"HP: {player['hp']}")
+    print(f"Атака: {player['attack']}")
+    print(f"Зілля: {player['potions']}")
+
+# ---------- Обробка бою ----------
+def battle(player):
+    enemy_hp = random.randint(40, 70)
+    enemy_attack = random.randint(10, 15)
+
+    print("\n⚔️ З'явився ворог!")
+
+    while enemy_hp > 0 and player["hp"] > 0:
+        print(f"\nВорог HP: {enemy_hp}")
+        print("1 - Атакувати")
+        print("2 - Використати зілля")
+
+        choice = input("Ваш вибір: ")
+
+        if choice == "1":
+            damage = random.randint(10, player["attack"])
+            enemy_hp -= damage
+            print(f"Ви нанесли {damage} шкоди!")
+
+        elif choice == "2":
+            if player["potions"] > 0:
+                player["hp"] += 30
+                player["potions"] -= 1
+                print("Ви використали зілля (+30 HP)")
+            else:
+                print("❌ Немає зіль!")
+
+        else:
+            print("❌ Невірний вибір!")
+            continue
+
+        if enemy_hp > 0:
+            dmg = random.randint(5, enemy_attack)
+            player["hp"] -= dmg
+            print(f"Ворог атакує і наносить {dmg} шкоди!")
+
+    return player["hp"] > 0
+
+# ---------- Вибір дії ----------
+def choose_action(player):
+    print("\n🔹 Оберіть дію:")
+    print("1 - Дослідити локацію")
+    print("2 - Перевірити статус")
+    print("3 - Вийти з гри")
+
+    choice = input("Ваш вибір: ")
+
+    if choice == "1":
+        print("\nВи вирушаєте вперед...")
+        return "battle"
+    elif choice == "2":
+        show_status(player)
+        return "status"
+    elif choice == "3":
+        return "exit"
+    else:
+        print("❌ Невірний вибір!")
+        return "invalid"
+
+# ---------- Завершення гри ----------
+def end_game(win):
+    if win:
+        print("\n🏆 Ви перемогли! Гра завершена.")
+    else:
+        print("\n💀 Ви загинули. Гра завершена.")
+
+# ---------- Головна функція ----------
+def main():
+    player = create_character()
+
+    game_running = True
+
+    while game_running:
+        action = choose_action(player)
+
+        if action == "battle":
+            alive = battle(player)
+            if not alive:
+                end_game(False)
+                break
+
+        elif action == "exit":
+            end_game(True)
+            break
+
+if __name__ == "__main__":
+    main()

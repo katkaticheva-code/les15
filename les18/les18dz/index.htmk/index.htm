@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyBlog Demo</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { margin: 0; background: #f7f7f7; color: #222; }
+
+    header {
+      background: #fff;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,.05);
+      position: sticky; top: 0; z-index: 10;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #333;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    nav a:hover { color: #6c63ff; }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,.08);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 30px rgba(0,0,0,.12);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content { padding: 15px; }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      border: none;
+      background: #eee;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: .2s;
+      font-size: 14px;
+    }
+    .btn:hover { background: #6c63ff; color: #fff; }
+
+    .load-more {
+      display: block;
+      margin: 40px auto 60px;
+      padding: 12px 28px;
+      border-radius: 30px;
+      border: none;
+      background: #6c63ff;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .load-more:hover { opacity: .9; }
+  </style>
+</head>
+<body>
+
+<header>
+  <strong>MyBlog</strong>
+  <nav>
+    <a onclick="filterContent('photo')">Photographs</a>
+    <a onclick="filterContent('music')">Music</a>
+    <a onclick="filterContent('video')">Video</a>
+    <a onclick="showAll()">All</a>
+  </nav>
+</header>
+
+<div class="container" id="cards">
+  <!-- Первые 3 поста -->
+  <div class="card" data-type="photo">
+    <img src="https://picsum.photos/500/300?1">
+    <div class="card-content">
+      <h3>Утро в горах</h3>
+      <p>Тишина, свежий воздух и ощущение, что весь мир поставили на паузу.</p>
+      <div class="actions">
+        <button class="btn" onclick="like(this)">❤️ <span>0</span></button>
+        <button class="btn" onclick="comment()">💬 Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-type="video">
+    <img src="https://picsum.photos/500/300?2">
+    <div class="card-content">
+      <h3>Момент перед прыжком</h3>
+      <p>Когда стоишь на краю и решаешься сделать шаг вперёд.</p>
+      <div class="actions">
+        <button class="btn" onclick="like(this)">❤️ <span>0</span></button>
+        <button class="btn" onclick="comment()">💬 Comment</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" data-type="music">
+    <img src="https://picsum.photos/500/300?3">
+    <div class="card-content">
+      <h3>Маленькие радости</h3>
+      <p>Кофе, книга и пару минут для себя — иногда этого достаточно.</p>
+      <div class="actions">
+        <button class="btn" onclick="like(this)">❤️ <span>0</span></button>
+        <button class="btn" onclick="comment()">💬 Comment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="load-more" onclick="loadMore()">Load more (+10)</button>
+
+<script>
+  let photoIndex = 4;
+
+  const posts = [
+    { title: "Движение — это жизнь", text: "Не важно как быстро ты идёшь. Важно — что не останавливаешься." },
+    { title: "Поймал момент", text: "Такие секунды хочется сохранять в памяти навсегда." },
+    { title: "Вечерний свет", text: "Закаты напоминают, что каждый день можно красиво закончить." },
+    { title: "Немного тишины", text: "Иногда лучшее, что можно сделать — просто помолчать." },
+    { title: "Новые дороги", text: "Каждая поездка — это маленькая новая жизнь." },
+    { title: "Энергия момента", text: "Когда ловишь ритм и забываешь про всё остальное." },
+    { title: "Дом там, где спокойно", text: "Не место делает тебя счастливым, а ощущение внутри." },
+    { title: "Новый взгляд", text: "Иногда достаточно посмотреть под другим углом." },
+    { title: "Пауза в рутине", text: "Маленький перерыв может изменить весь день." },
+    { title: "Лови момент", text: "Лучшие кадры получаются случайно." }
+  ];
+
+  function like(btn) {
+    const span = btn.querySelector("span");
+    span.textContent = parseInt(span.textContent) + 1;
+  }
+
+  function comment() {
+    const text = prompt("Напиши комментарий:");
+    if (text) alert("Комментарий добавлен: " + text);
+  }
+
+  function filterContent(type) {
+    document.querySelectorAll(".card").forEach(card => {
+      card.style.display = card.dataset.type === type ? "block" : "none";
+    });
+  }
+
+  function showAll() {
+    document.querySelectorAll(".card").forEach(card => {
+      card.style.display = "block";
+    });
+  }
+
+  function loadMore() {
+    const cards = document.getElementById("cards");
+    const types = ["photo", "music", "video"];
+
+    posts.forEach(post => {
+      const type = types[Math.floor(Math.random() * types.length)];
+
+      const card = document.createElement("div");
+      card.className = "card";
+      card.dataset.type = type;
+
+      card.innerHTML = `
+        <img src="https://picsum.photos/500/300?random=${photoIndex++}">
+        <div class="card-content">
+          <h3>${post.title}</h3>
+          <p>${post.text}</p>
+          <div class="actions">
+            <button class="btn" onclick="like(this)">❤️ <span>0</span></button>
+            <button class="btn" onclick="comment()">💬 Comment</button>
+          </div>
+        </div>
+      `;
+
+      cards.appendChild(card);
+    });
+  }
+</script>
+
+</body>
+</html>
