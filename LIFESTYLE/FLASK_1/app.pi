@@ -1,0 +1,33 @@
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Hello, World!"
+
+@app.route('/about')
+def about():
+    return "<h2>Це сторінка про нас</h2><p>Опис сайту</p>"
+
+@app.route('/contact/<name>')
+def contact(name):
+    return f"<h2>Контактна інформація для {name}</h2>"
+
+#  Маршрут для квадрата числа
+@app.route('/square/<int:number>')
+def square(number):
+    return str(number * number)
+
+#  Маршрут для віку
+@app.route('/age/<int:age>')
+def age_category(age):
+    if age < 18:
+        return "Ти неповнолітній"
+    elif 18 <= age <= 60:
+        return "Працездатний вік"
+    else:
+        return "Пенсійний вік"
+
+if __name__ == '__main__':
+    app.run(debug=True)
